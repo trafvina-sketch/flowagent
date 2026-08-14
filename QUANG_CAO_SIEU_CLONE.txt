@@ -1,0 +1,46 @@
+================================================================================
+           CHIEN DICH TRUYEN THONG & DINH VI THUONG HIEU: SIEU CLONE AI v2.0
+================================================================================
+
+1. TEN GOI VA DINH VI THUONG HIEU
+----------------------------------
+- Ten san pham: Siêu Clone AI v2.0 (Hệ sinh thái AI All-in-One nhân bản nội dung)
+- Slogan: "Một click bẻ khóa video gốc, nhân bản hàng loạt video triệu view tự động"
+- Lợi ích cốt lõi:
+  + Công nghệ bẻ khóa cấu trúc video YouTube/video cục bộ, clone và remix ảnh/giọng nói AI hoàn hảo.
+  + Tích hợp FlowAgent Studio tạo ảnh/video hàng loạt từ ý tưởng với độ dài lên đến 10s.
+  + Tích hợp KeyTube SEO giúp tối ưu tiêu đề, mô tả và bộ tag chuẩn SEO YouTube chỉ trong 1 click.
+  + Tích hợp Lyric Video tự động (karaoke, typewriter...) với công nghệ kết xuất WebCodecs bằng phần cứng nhanh gấp 10 lần bình thường.
+
+2. DOI TUONG KHACH HANG MUC TIEU (TARGET AUDIENCE)
+--------------------------------------------------
+- Các nhà làm MMO, Re-up chuyên nghiệp trên đa nền tảng (YouTube Shorts, TikTok, Facebook Reels).
+- Đội nhóm marketing xây dựng hệ thống hàng trăm kênh video âm nhạc, review sản phẩm.
+- Người muốn tối ưu hóa SEO kênh YouTube tự động để ăn đề xuất nhanh nhất.
+
+3. NOI DUNG QUANG CAO (COPYWRITING TAP TRUNG VAO LOI ICH)
+---------------------------------------------------------
+[Bai Viet 1 - Danh vào nỗi đau xuất video chậm và bản quyền]
+Tieu de: NHAN BAN VIDEO TRIEU VIEW TRONG 30 GIAY - CONG NGHE WEBCODECS SANG TAO DOT PHA!
+Noi dung:
+"Bạn muốn làm kênh nhạc Lyrics hoặc Re-up video nước ngoài nhưng render quá lâu và liên tục dính bản quyền?
+Siêu Clone AI v2.0 mang đến giải pháp đỉnh cao:
+- Bẻ khóa và remix cấu trúc video gốc thông minh, thay thế 100% hình ảnh/âm thanh sang phiên bản AI hoàn toàn mới.
+- Tạo video Lyrics tự động (chạy karaoke, typewriter) kết xuất bằng WebCodecs phần cứng cực nhanh, không giật lag, x10 tốc độ render.
+- Tự động tối ưu hóa từ khóa SEO giúp video nhanh chóng lên top xu hướng YouTube.
+Sở hữu ngay hệ sinh thái AI tối tân nhất: Đường Thọ - 0934415387"
+
+[Bai Viet 2 - Bài viết ngắn gọn liệt kê tính năng dạng lợi ích]
+Tieu de: SIEU CLONE AI v2.0 - NHA MAY SAN XUAT NOI DUNG MULTI-TOOL
+Noi dung:
+"Hệ sinh thái AI tích hợp 4 siêu phẩm công nghệ hàng đầu hiện nay:
+1. SIÊU CLONE & REMIX: Clone cấu trúc video gốc, thay đổi nhân vật/bối cảnh bằng AI theo ý thích.
+2. FLOWAGENT STUDIO: Tạo ảnh & video hàng loạt (T2I, T2V, I2V, R2V) thời lượng lên đến 10s.
+3. LYRIC VIDEO WEBCODECS: Tạo video karaoke tự động chạy chữ khớp nhạc, render bằng phần cứng siêu nhanh.
+4. KEYTUBE SEO: Phân tích từ khóa và tối ưu hóa SEO YouTube 1-click để thu hút lượng view tự nhiên lớn.
+5. ADVANCED PROXY MIỄN PHÍ: Chạy tác vụ AI thoải mái không cần điền API Key cá nhân.
+Liên hệ nhận bản VIP ngay hôm nay: Đường Thọ - 0934415387"
+
+================================================================================
+           (C) 2026 Siêu Clone AI — Content Factory. Hotline: 0934415387
+================================================================================

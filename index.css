@@ -1,0 +1,360 @@
+/* ============================================================
+   SIÊU CLONE AI — Premium Dark Design System
+   Font: Plus Jakarta Sans (headings) + Inter (body)
+   Palette: Deep navy-black + Violet accent
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+/* ── Design Tokens ── */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+
+  /* Background scale — Lighter slate-blue dark */
+  --color-base:       #141928;
+  --color-surface:    #1c2236;
+  --color-elevated:   #232b44;
+  --color-panel:      #2a3352;
+
+  /* Border */
+  --color-border:       #2e3a58;
+  --color-border-light: #3d4e70;
+
+  /* Accent — Bright Violet */
+  --color-accent:       #8b7ff9;
+  --color-accent-light: #a99cff;
+  --color-accent-dim:   #8b7ff925;
+  --color-accent-glow:  #8b7ff945;
+
+  /* Cyan highlight */
+  --color-cyan:      #38bdf8;
+  --color-cyan-dim:  #38bdf825;
+
+  /* Text scale */
+  --color-text-primary:   #f0f2ff;
+  --color-text-secondary: #9aa5cc;
+  --color-text-muted:     #556080;
+
+  /* Status */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error:   #f43f5e;
+
+  /* Cinema palette — cho KeyTube SEO tab */
+  --color-cinema-50:  #f5f3ff;
+  --color-cinema-100: #ede9fe;
+  --color-cinema-200: #ddd6fe;
+  --color-cinema-300: #c084fc;
+  --color-cinema-400: #a855f7;
+  --color-cinema-500: #8b5cf6;
+  --color-cinema-600: #7c3aed;
+  --color-cinema-700: #6d28d9;
+  --color-cinema-800: #1e1b4b;
+  --color-cinema-900: #0f0e26;
+  --color-cinema-950: #050410;
+}
+
+/* ── Base Reset ── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-base);
+    background-image: url('/bg.png');
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    background-blend-mode: overlay;
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: #fff;
+  }
+
+  /* Headings → Display font */
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--color-text-primary);
+  }
+
+  /* Monospace */
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+/* ── Scrollbar — Premium minimal ── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-light);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Utility: Glow effects ── */
+.glow-accent {
+  box-shadow: 0 0 20px var(--color-accent-glow), 0 0 60px var(--color-accent-dim);
+}
+.glow-text {
+  text-shadow: 0 0 20px var(--color-accent-glow);
+}
+
+/* ── Utility: Glass cards ── */
+.glass {
+  background: rgba(22, 22, 38, 0.7);
+  backdrop-filter: blur(16px) saturate(1.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  border: 1px solid var(--color-border);
+}
+
+/* ── Gradient text ── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Ambient overlay cho sections trong suốt ── */
+.bg-grid {
+  background: transparent;
+}
+
+/* Hero section overlay — gradient xuống dưới để merge với nội dung */
+.hero-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--color-base) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-overlay { position: relative; }
+
+/* ── Noise texture overlay ── */
+.noise::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+  z-index: 9999;
+}
+
+/* ── Animated accent line for header ── */
+.header-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--color-surface) 0%,
+    var(--color-elevated) 100%
+  );
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 1px 0 rgba(124,106,247,0.08), 0 4px 20px rgba(0,0,0,0.4);
+}
+
+/* ── Progress bar shimmer ── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+.progress-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-accent) 0%,
+    var(--color-accent-light) 40%,
+    var(--color-cyan) 60%,
+    var(--color-accent) 100%
+  );
+  background-size: 200% auto;
+  animation: shimmer 2s linear infinite;
+}
+
+/* ── Button base states ── */
+.btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.btn-primary:hover {
+  background: var(--color-accent-light);
+  box-shadow: 0 0 16px var(--color-accent-glow);
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* ── Range Slider — Premium ── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-accent-dim), var(--color-border-light));
+  outline: none;
+  transition: background 0.2s;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  cursor: pointer;
+  border: 2px solid var(--color-accent-light);
+  box-shadow: 0 0 8px var(--color-accent-glow), 0 2px 4px rgba(0,0,0,0.3);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 16px var(--color-accent-glow), 0 2px 8px rgba(0,0,0,0.4);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  cursor: pointer;
+  border: 2px solid var(--color-accent-light);
+  box-shadow: 0 0 8px var(--color-accent-glow);
+}
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-accent-dim), var(--color-border-light));
+}
+
+/* ============================================================
+   FLOW AGENT STUDIO — Embedded Styles
+   ============================================================ */
+
+.flow-studio .glass-card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(51, 65, 85, 0.5);
+  border-radius: 1rem;
+}
+
+.flow-studio .glow-primary {
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3), 0 0 40px rgba(99, 102, 241, 0.1);
+}
+
+.flow-studio .glow-accent {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3), 0 0 40px rgba(16, 185, 129, 0.1);
+}
+
+.flow-studio .glow-danger {
+  box-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
+}
+
+.flow-studio .shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(99, 102, 241, 0.05) 25%,
+    rgba(99, 102, 241, 0.15) 50%,
+    rgba(99, 102, 241, 0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: fs-shimmer 2s infinite;
+}
+
+.flow-studio .media-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.flow-studio .media-card-hover:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(99, 102, 241, 0.15);
+}
+
+.flow-studio .pulse-dot {
+  animation: fs-pulse-dot 2s ease-in-out infinite;
+}
+
+.flow-studio .fade-in {
+  animation: fs-fadeIn 0.3s ease-out;
+}
+
+.flow-studio .slide-up {
+  animation: fs-slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.flow-studio .modal-backdrop {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+@keyframes fs-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes fs-pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+@keyframes fs-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fs-slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* React Flow overrides for workflow canvas */
+.flow-studio .react-flow__node {
+  border-radius: 0.75rem;
+}
+
+.flow-studio .react-flow__edge-path {
+  stroke: #6366f1;
+  stroke-width: 2;
+}
+
+.flow-studio .react-flow__background {
+  background: #0f172a;
+}

@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+python-multipart
+aiofiles
+aiohttp
+httpx
+Pillow
+pywebview
+imageio-ffmpeg

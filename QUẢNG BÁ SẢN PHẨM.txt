@@ -1,0 +1,75 @@
+╔══════════════════════════════════════════════════════════════╗
+║        SIÊU CLONE AI v2.0 - NHÀ MÁY SẢN XUẤT NỘI DUNG        ║
+║               Content Factory — Ultimate AI Suite            ║
+╚══════════════════════════════════════════════════════════════╝
+
+Siêu Clone AI v2.0 là hệ sinh thái AI All-in-One tối tân dành cho các nhà sáng tạo nội dung, marketer, và dân MMO. Được thiết kế tối ưu để tự động hóa toàn bộ quy trình sản xuất video, tạo ảnh, nghiên cứu SEO và dựng video lyric tự động, giúp bạn nhân bản hàng ngàn video triệu view, thống trị các nền tảng TikTok, Shorts, Reels, và YouTube chỉ trong vài cú click!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 4 SIÊU PHẨM CÔNG NGHỆ TRONG MỘT PHẦN MỀM DUY NHẤT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🧬 1. SIÊU CLONE — CÔNG NGHỆ NHÂN BẢN & REMIX VIDEO AI ĐỘC QUYỀN
+   Tính năng bẻ khóa cấu trúc video YouTube hoặc video cục bộ để tạo ra các biến thể mới hoàn hảo.
+   
+   ✅ Phân tích chuyên sâu: Tự động phân rã video gốc thành các phân cảnh chi tiết, nhận diện visual (bối cảnh), audio (lời thoại, giọng đọc), và phong cách nghệ thuật (anime, cinematic, 3D, Cyberpunk, Ghibli...).
+   ✅ Công nghệ Remix 3-in-1 Đỉnh Cao:
+      • Clone thuần: Giữ nguyên bố cục, tình tiết nhưng đổi mới 100% nội dung hình ảnh/âm thanh sang phiên bản AI.
+      • Text Remix: Thay đổi nhân vật, bối cảnh bằng văn bản theo ý thích (Ví dụ: "Biến nhân vật chính thành Naruto", "Đưa bối cảnh về thời viễn cổ").
+      • Slider Remix: Thanh trượt điều chỉnh trọng số Phong cách (Style Weight) & Nhân vật (Character Weight) từ 0-100% để tùy biến độ tương đồng cực kỳ linh hoạt.
+   ✅ Tạo phần tiếp theo (Next Part): Tự động kế thừa toàn bộ bối cảnh, phong cách nghệ thuật và nhân vật từ phần trước để phát triển chuỗi video dài kỳ (series) không giới hạn, nhất quán 100% cốt truyện.
+   ✅ Chế độ âm thanh đa dạng: Narration (Thuyết minh), Dialogue (Hội thoại đối đáp giữa các nhân vật), ASMR, Auto.
+   ✅ Trợ lý AI Chat thông minh: Chat trực tiếp với AI để lên ý tưởng kịch bản, chỉnh sửa chi tiết video dựa trên kết quả phân tích.
+   ✅ Thư viện lưu trữ (Library): Lưu trữ lịch sử trên IndexedDB cục bộ, giúp quản lý, tái sử dụng hoặc remix lại bất cứ lúc nào.
+
+🎨 2. FLOWAGENT STUDIO — XƯỞNG SẢN XUẤT ẢNH & VIDEO AI HÀNG LOẠT
+   Tích hợp trực tiếp Flow API cao cấp để biến ý tưởng thành hình ảnh và thước phim sống động.
+   
+   ✅ Tạo ảnh & video đa dạng: Hỗ trợ tạo ảnh chất lượng cao (Text-to-Image), tạo video từ mô tả (Text-to-Video), tạo video từ ảnh (Image-to-Video), và tạo video từ ảnh tham chiếu (Reference-to-Video).
+   ✅ Tùy chọn thời lượng tối ưu: Đa dạng các dòng model video với độ dài 4s, 6s, 8s, 10s đáp ứng mọi nhu cầu làm phim ngắn/dài.
+   ✅ Quy trình hàng loạt (Batch Workflow): Cho phép tạo và xuất video hàng loạt tự động, tối ưu công suất sản xuất video quy mô lớn cho các chiến dịch MMO/Affiliate.
+   ✅ Ghi nhớ cốt truyện (Story Memory): Giúp các AI Agents ghi nhớ nhân vật và diễn biến để phát triển khung cảnh tiếp theo không bị lệch tông.
+   ✅ FlowKit Chrome Extension: Extension đồng bộ hóa tài nguyên và dữ liệu mượt mà từ trình duyệt Chrome vào Flow Studio.
+
+🔍 3. KEYTUBE SEO — CÔNG CỤ THỐNG TRỊ TOP XU HƯỚNG YOUTUBE
+   Bộ công cụ SEO chuyên dụng dành riêng cho các nhà sáng tạo nội dung YouTube.
+   
+   ✅ Nghiên cứu từ khóa chuyên sâu: Tìm kiếm và phân tích các từ khóa có lượng tìm kiếm lớn, độ cạnh tranh thấp.
+   ✅ Tối ưu hóa SEO 1-Click: Tự động đề xuất và tạo tiêu đề, mô tả, bộ thẻ tag chuẩn SEO giúp video dễ dàng ăn đề xuất và leo top tìm kiếm.
+   ✅ Phát hiện xu hướng: Giúp bạn luôn đi trước đối thủ bằng cách bắt kịp các chủ đề đang hot nhất trên thị trường.
+
+🎵 4. LYRIC VIDEO — BIẾN ÂM NHẠC THÀNH THƯỚC PHIM NGHỆ THUẬT
+   Giải pháp tạo video lyrics/music video tự động cực kỳ bắt mắt để xây kênh âm nhạc triệu view.
+   
+   ✅ Nhận diện lời nhạc tự động: Phân tách và khớp nhạc nền với lyrics cực kỳ chính xác.
+   ✅ Kho hiệu ứng chữ (Text Effects) sống động:
+      • Karaoke: Chữ chạy đổi màu khớp từng nốt nhạc.
+      • Word / Typewriter: Chữ hiện theo từ hoặc hiệu ứng đánh máy nghệ thuật.
+      • Shake / Gradient: Chữ rung lắc theo nhịp hoặc chữ đổi màu chuyển sắc bắt mắt.
+   ✅ Chế độ Đĩa Than (Vinyl Mode): Tạo visual đĩa than quay cổ điển, sang trọng và thu hút người xem.
+   ✅ Xuất video siêu tốc (Fast Export): 
+      • ⚠️ ĐỘT PHÁ CÔNG NGHỆ: Sử dụng WebCodecs (VideoEncoder + AudioEncoder) & webm-muxer kết xuất video trực tiếp bằng sức mạnh phần cứng thay vì ghi hình thời gian thực.
+      • Tốc độ xuất video nhanh gấp 5-10 lần bình thường, không giật lag, không lỗi đứng hình.
+      • Đảm bảo chất lượng video sắc nét, âm thanh chất lượng cao, khớp sub 100%.
+   ✅ Đa dạng khung hình: Tùy chỉnh kích thước ngang (16:9 cho YouTube) hoặc dọc (9:16 cho TikTok, Reels, Shorts).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 TẠI SAO SIÊU CLONE AI v2.0 LÀ LỰA CHỌN TỐI ƯU NHẤT CHO BẠN?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 Tự động hóa 95% quy trình: Không cần thuê biên kịch, không cần diễn viên, không cần phòng thu âm, không cần biết edit video chuyên nghiệp. Một mình bạn có thể vận hành cả một mạng lưới kênh lớn.
+🚀 Giao diện Premium: Thiết kế Dark Mode hiện đại, trực quan, hỗ trợ hiệu ứng chuyển cảnh mượt mà, thân thiện với người dùng.
+🚀 Tiết kiệm chi phí tối đa:
+   • Tính năng Advanced Proxy thông minh: Không cần tạo hay trả tiền mua API Key Gemini cá nhân. Chỉ cần bật proxy trong cài đặt là có thể dùng thoải mái.
+   • Hỗ trợ đa ngôn ngữ tiện lợi.
+🚀 Đóng gói hoàn chỉnh: Bộ cài đặt EXE tự động, hỗ trợ script cài đặt Python & thư viện Flow Studio chỉ với 1-click chuột. An toàn, bảo mật và cực kỳ ổn định.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📞 LIÊN HỆ ĐỂ SỞ HỮU NGAY PHIÊN BẢN VIP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   👨‍💻 Hỗ trợ kỹ thuật & Kích hoạt bản quyền:
+   💬 Zalo / Hotline: Đường Thọ — 0934415387
+   🌐 Chat trực tiếp tại: https://zalo.me/0934415387
+   
+   © 2026 Siêu Clone AI — Content Factory. All rights reserved.

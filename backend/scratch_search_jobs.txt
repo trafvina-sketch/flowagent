@@ -1,0 +1,25 @@
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\backend\flow_service.py:62: def update_job_status(job_id, status, media_id=None, url=None):
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\backend\flow_service.py:427: async def check_media_status(self, media_id: str):
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\backend\flow_service.py:437: async def check_video_status(self, operations: list):
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\backend\flow_service.py:439: return await self.check_media_status(op)
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\backend\search_jobs.py:5: pattern = re.compile(r"update_job_status|check_media_status|check_video_status", re.IGNORECASE)
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\backend\routers\flowkit.py:4: from flow_service import flow_service, get_pending_jobs, update_job_status, get_all_jobs
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\backend\routers\flowkit.py:149: update_job_status(job["id"], "PROCESSING", media_id=mid)
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\backend\routers\flowkit.py:152: res = await flow_service.check_media_status(mid)
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\backend\routers\flowkit.py:178: update_job_status(job["id"], "FAILED")
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\backend\routers\flowkit.py:205: update_job_status(job["id"], "DONE", media_id=mid, url=local_url)
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\backend\routers\flowkit.py:209: update_job_status(job["id"], "DONE", media_id=mid, url=fife_url)
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\backend\routers\flowkit.py:228: update_job_status(job["id"], "DONE", media_id=mid, url=f"/media-files/videos/{filename}")
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\backend\routers\flowkit.py:234: update_job_status(job["id"], "FAILED")
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\dist\FlowAgent\_internal\flow_service.py:62: def update_job_status(job_id, status, media_id=None, url=None):
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\dist\FlowAgent\_internal\flow_service.py:425: async def check_media_status(self, media_id: str):
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\dist\FlowAgent\_internal\flow_service.py:435: async def check_video_status(self, operations: list):
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\dist\FlowAgent\_internal\flow_service.py:437: return await self.check_media_status(op)
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\dist\FlowAgent\_internal\routers\flowkit.py:4: from flow_service import flow_service, get_pending_jobs, update_job_status, get_all_jobs
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\dist\FlowAgent\_internal\routers\flowkit.py:149: update_job_status(job["id"], "PROCESSING", media_id=mid)
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\dist\FlowAgent\_internal\routers\flowkit.py:152: res = await flow_service.check_media_status(mid)
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\dist\FlowAgent\_internal\routers\flowkit.py:178: update_job_status(job["id"], "FAILED")
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\dist\FlowAgent\_internal\routers\flowkit.py:205: update_job_status(job["id"], "DONE", media_id=mid, url=local_url)
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\dist\FlowAgent\_internal\routers\flowkit.py:209: update_job_status(job["id"], "DONE", media_id=mid, url=fife_url)
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\dist\FlowAgent\_internal\routers\flowkit.py:228: update_job_status(job["id"], "DONE", media_id=mid, url=f"/media-files/videos/{filename}")
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\dist\FlowAgent\_internal\routers\flowkit.py:234: update_job_status(job["id"], "FAILED")

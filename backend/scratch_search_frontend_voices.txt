@@ -1,0 +1,32 @@
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\generate\GeneratePanel.tsx:32: voice?: string;
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\generate\GeneratePanel.tsx:35: voiceMediaId?: string;
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\generate\GeneratePanel.tsx:38: const VOICES = [
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\generate\GeneratePanel.tsx:705: {char.voice && <span className="text-[9px] bg-indigo-500/20 text-indigo-300 px-1.5 py-0.5 rounded">🎤 {char.voice}</span>}
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\generate\GeneratePanel.tsx:744: {/* Voice & Personality */}
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\generate\GeneratePanel.tsx:749: value={char.voice || ''}
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\generate\GeneratePanel.tsx:750: onChange={(e) => setCharacters(prev => prev.map(c => c.id === char.id ? { ...c, voice: e.target.value || undefined } : c))}
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\generate\GeneratePanel.tsx:753: {VOICES.map(v => <option key={v.value} value={v.value}>{v.label}</option>)}
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\generate\GeneratePanel.tsx:767: {char.voice && (
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\generate\GeneratePanel.tsx:769: <label className="text-[9px] text-slate-500 mb-1 block">💬 Hội thoại mẫu (tạo voice)</label>
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\layout\GuideModal.tsx:296: Nơi lưu trữ lời thoại (Dialog), giọng đọc AI (Voice Speaker), mô tả hình ảnh (Visual Prompt).
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\layout\GuideModal.tsx:324: <li><strong>Lựa chọn Voice:</strong> App hỗ trợ nhiều giọng đọc AI tiếng Việt chất lượng cao. Bạn có thể chọn giọng trong node Scene.</li>
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\BatchVideoPanel.tsx:35: voice?: string;
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\BatchVideoPanel.tsx:41: const VOICES = [
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\BatchVideoPanel.tsx:338: {char.voice && <span className="text-[8px] bg-indigo-500/20 text-indigo-300 px-1 py-0.5 rounded">🎤</span>}
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\BatchVideoPanel.tsx:370: {/* Voice & Personality */}
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\BatchVideoPanel.tsx:373: value={char.voice || ''}
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\BatchVideoPanel.tsx:374: onChange={(e) => setCharacters(prev => prev.map(c => c.id === char.id ? { ...c, voice: e.target.value || undefined } : c))}
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\BatchVideoPanel.tsx:377: {VOICES.map(v => <option key={v.value} value={v.value}>{v.label}</option>)}
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\CharacterNode.tsx:15: const VOICES = [
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\CharacterNode.tsx:36: const [voice, setVoice] = useState(data.voice || '');
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\CharacterNode.tsx:69: // Play voice demo from local /voices/*.wav files
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\CharacterNode.tsx:70: const previewVoice = () => {
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\CharacterNode.tsx:71: if (!voice) return;
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\CharacterNode.tsx:81: const audio = new Audio(`/voices/${voice}.wav`);
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\CharacterNode.tsx:86: audio.onerror = () => { setIsPlaying(false); audioRef.current = null; toast.error('File voice không tồn tại'); };
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\CharacterNode.tsx:194: {/* Voice & Personality */}
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\CharacterNode.tsx:197: <label className="text-[8px] text-slate-500 flex items-center gap-0.5"><Mic className="w-2 h-2" /> Voice</label>
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\CharacterNode.tsx:199: <select value={voice} onChange={(e) => { setVoice(e.target.value); stopAudio(); }}
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\CharacterNode.tsx:201: {VOICES.map(v => <option key={v.value} value={v.value}>{v.label}</option>)}
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\CharacterNode.tsx:203: {voice && (
+c:\Users\Admin\Desktop\Dự án Riêng\Agent flow\FlowVisualStudio\frontend\src\components\workflow\CharacterNode.tsx:205: onClick={isPlaying ? stopAudio : previewVoice}

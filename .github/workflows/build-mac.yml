@@ -1,0 +1,42 @@
+name: Build FlowAgent AI for macOS
+
+on:
+  workflow_dispatch: # Cho phép bấm nút "Run workflow" thủ công trên GitHub bất cứ lúc nào
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Node Dependencies
+        run: npm ci
+
+      - name: Build Web Application
+        run: npm run build
+
+      - name: Package macOS App (DMG & ZIP for ARM64 and x64)
+        run: npx electron-builder --mac --arm64 --x64
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload macOS Artifacts (DMG & ZIP)
+        uses: actions/upload-artifact@v4
+        with:
+          name: FlowAgent-AI-macOS-Builds
+          path: |
+            release/*.dmg
+            release/*.zip
+          retention-days: 14

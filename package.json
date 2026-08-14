@@ -1,0 +1,173 @@
+{
+  "name": "flow-agent-ai",
+  "productName": "FlowAgent AI",
+  "version": "1.0.0",
+  "description": "FlowAgent AI - Automation & Content Generation System",
+  "private": true,
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "tsc --noEmit",
+    "electron:dev": "node kill-ports.js && concurrently \"npm run dev\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron:build": "npm run build && electron-builder",
+    "dist": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:mac:arm64": "npm run build && electron-builder --mac --arm64",
+    "dist:mac:x64": "npm run build && electron-builder --mac --x64",
+    "dist:mac:universal": "npm run build && electron-builder --mac --universal",
+    "dist:all": "npm run build && electron-builder -mw"
+  },
+  "dependencies": {
+    "@google/genai": "^1.27.0",
+    "@xyflow/react": "^12.10.2",
+    "axios": "^1.16.1",
+    "clsx": "^2.1.1",
+    "file-saver": "^2.0.5",
+    "i18next": "^25.10.9",
+    "i18next-browser-languagedetector": "^8.2.1",
+    "i18next-http-backend": "^3.0.2",
+    "jszip": "^3.10.1",
+    "localforage": "^1.10.0",
+    "lucide-react": "^1.6.0",
+    "motion": "^12.38.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-hot-toast": "^2.6.0",
+    "react-i18next": "^16.6.6",
+    "tailwind-merge": "^3.5.0",
+    "zustand": "^5.0.13"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/file-saver": "^2.0.7",
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "concurrently": "^9.1.0",
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.0",
+    "tailwindcss": "^4.2.2",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0",
+    "wait-on": "^8.0.0"
+  },
+  "build": {
+    "appId": "com.flowagent.ai",
+    "productName": "FlowAgent AI",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "public/icon.png",
+        "to": "icon.png"
+      },
+      {
+        "from": "start.bat",
+        "to": "start.bat"
+      },
+      {
+        "from": "Cài đặt Python (Flow Studio).bat",
+        "to": "Cài đặt Python (Flow Studio).bat"
+      },
+      {
+        "from": "setup_python.ps1",
+        "to": "setup_python.ps1"
+      },
+      {
+        "from": "setup_python.sh",
+        "to": "setup_python.sh"
+      },
+      {
+        "from": "backend",
+        "to": "backend",
+        "filter": [
+          "**/*",
+          "!__pycache__/**",
+          "!*.db",
+          "!media/**"
+        ]
+      },
+      {
+        "from": "flowkit_extension",
+        "to": "flowkit_extension"
+      },
+      {
+        "from": "streamflow",
+        "to": "streamflow",
+        "filter": [
+          "**/*",
+          "!db/*.db",
+          "!logs/**",
+          "!node_modules/**"
+        ]
+      }
+    ],
+    "win": {
+      "icon": "public/icon.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "FlowAgent AI"
+    },
+    "mac": {
+      "icon": "public/icon.png",
+      "category": "public.app-category.productivity",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "title": "${productName} ${version}",
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ],
+      "window": {
+        "width": 540,
+        "height": 380
+      }
+    }
+  }
+}

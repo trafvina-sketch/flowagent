@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lyrics Video Generator - Trình Tạo Video Lyric & Karaoke AI</title>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo-container">
+      <div class="logo-icon">
+        <i class="fa-solid fa-music"></i>
+      </div>
+      <span class="logo-text">Lyrics Video Generator</span>
+    </div>
+    
+    <!-- Central Toolbar: Video & Export Actions (Professional Header placement) -->
+    <div class="header-toolbar">
+      <!-- 1. Ratio Selector -->
+      <div class="toolbar-group">
+        <span class="toolbar-label"><i class="fa-solid fa-vector-square"></i> TỶ LỆ:</span>
+        <select id="ratioSelect" class="toolbar-select">
+          <option value="16-9">16:9 Ngang</option>
+          <option value="9-16">9:16 Dọc</option>
+          <option value="1-1">1:1 Vuông</option>
+        </select>
+      </div>
+
+      <!-- 2. FPS Selector -->
+      <div class="toolbar-group">
+        <span class="toolbar-label"><i class="fa-solid fa-gauge-high"></i> FPS:</span>
+        <select id="fpsSelect" class="toolbar-select">
+          <option value="60" selected>60 FPS (Mượt)</option>
+          <option value="30">30 FPS (Nhanh)</option>
+        </select>
+      </div>
+
+      <!-- 3. Quality Selector -->
+      <div class="toolbar-group">
+        <span class="toolbar-label"><i class="fa-solid fa-photo-film"></i> CHẤT LƯỢNG:</span>
+        <select id="qualitySelect" class="toolbar-select">
+          <option value="standard" selected>Chuẩn (720p)</option>
+          <option value="fast">Nhanh (480p)</option>
+          <option value="high">Cao (1080p)</option>
+        </select>
+      </div>
+
+      <!-- 4. Export Actions -->
+      <div class="toolbar-actions">
+        <button class="btn-export-webm" id="btnExportWebM" title="Tải định dạng WebM nhẹ, tải ngay lập tức">
+          <i class="fa-solid fa-circle-down"></i> Tải WebM
+        </button>
+        <button class="btn-export-mp4" id="btnExportMP4" title="Tải định dạng MP4 chất lượng cao">
+          <i class="fa-solid fa-film"></i> Tải Video MP4
+        </button>
+      </div>
+    </div>
+
+    <button class="api-key-btn" id="apiKeyBtn">
+      <i class="fa-solid fa-key"></i>
+      <span id="apiKeyStatus">Gemini API Key</span>
+    </button>
+  </header>
+
+  <!-- App Body Container -->
+  <div class="app-container" id="appContainer">
+    
+    <!-- Mobile Tabs (Visible only on Mobile/Tablet < 1024px) -->
+    <div class="mobile-tab-bar">
+      <button class="mobile-tab-btn active" data-mobile-tab="lyrics">
+        <i class="fa-solid fa-list-music"></i> Lyrics
+      </button>
+      <button class="mobile-tab-btn" data-mobile-tab="design">
+        <i class="fa-solid fa-palette"></i> Thiết kế
+      </button>
+    </div>
+    
+    <!-- Left Sidebar: Lyrics & Prompt -->
+    <aside class="sidebar-left">
+      <div class="settings-section-title">Đồng bộ Lyrics</div>
+
+      <!-- Tab: Lyrics -->
+      <div class="tab-content active" id="tab-lyrics">
+        <!-- Audio Uploader -->
+        <div class="audio-uploader" id="audioUploader" style="margin-bottom: 10px;">
+          <input type="file" id="audioFileInput" accept="audio/*,video/*" style="display: none;">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <p>Kéo thả hoặc click chọn file âm thanh hoặc video</p>
+          <div class="file-name-display" id="audioFileName"></div>
+        </div>
+
+        <!-- Cover Uploader and Background Mode (Moved from Right Sidebar for seamless input workflow) -->
+        <div style="display: flex; gap: 10px; margin-bottom: 12px; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-glow); padding: 10px; border-radius: 8px;">
+          <!-- 1. Background Cover selection -->
+          <div class="settings-group" style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+            <span class="settings-label" style="font-size: 0.65rem; color: var(--text-secondary);">ẢNH/VIDEO NỀN (COVER)</span>
+            <div class="bg-uploader" id="bgImageUploader" style="padding: 8px 4px; min-height: auto; height: 54px; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1.5px dashed rgba(255, 255, 255, 0.1);">
+              <input type="file" id="bgImageFileInput" accept="image/*,video/*" style="display: none;">
+              <i class="fa-solid fa-photo-film" style="font-size: 14px; color: var(--text-secondary); margin-bottom: 2px;"></i>
+              <p style="font-size: 0.62rem; margin: 0; color: var(--text-secondary);">Chọn ảnh hoặc video</p>
+            </div>
+            <div class="bg-image-preview" id="bgImagePreview" style="padding: 4px 8px; border-radius: 6px; margin-top: 4px; display: none; align-items: center; justify-content: space-between; background: rgba(0, 0, 0, 0.2); border: 1px solid var(--border-glow);">
+              <span class="bg-image-preview-text" id="bgImageName" style="font-size: 0.62rem; max-width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-primary);">cover.png</span>
+              <div style="display: flex; align-items: center; gap: 4px;">
+                <button class="bg-video-mute-btn" id="btnMuteBgVideo" title="Bật/Tắt âm thanh video nền" style="background: transparent; border: none; color: var(--neon-cyan); cursor: pointer; font-size: 0.75rem; display: none;">
+                  <i class="fa-solid fa-volume-xmark"></i>
+                </button>
+                <button class="bg-image-remove" id="btnRemoveBgImage" style="background: transparent; border: none; color: var(--neon-red); cursor: pointer; font-size: 0.75rem;">
+                  <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Background Display Mode Selector -->
+          <div class="settings-group" style="flex: 1.2; display: flex; flex-direction: column; gap: 4px;">
+            <span class="settings-label" style="font-size: 0.65rem; color: var(--text-secondary);">KIỂU HIỂN THỊ NỀN</span>
+            <div class="bgmode-grid" style="grid-template-columns: repeat(2, 1fr); gap: 4px; margin-top: 0; display: grid;">
+              <button class="bgmode-btn" data-bgmode="fit-blur" style="padding: 4px 2px; font-size: 0.65rem; height: 25px; display: flex; align-items: center; justify-content: center; gap: 4px;" title="Làm mờ viền">
+                <i class="fa-solid fa-clone" style="font-size: 0.6rem;"></i> Mờ viền
+              </button>
+              <button class="bgmode-btn active" data-bgmode="crop-fill" style="padding: 4px 2px; font-size: 0.65rem; height: 25px; display: flex; align-items: center; justify-content: center; gap: 4px;" title="Tràn viền">
+                <i class="fa-solid fa-crop-simple" style="font-size: 0.6rem;"></i> Tràn viền
+              </button>
+              <button class="bgmode-btn" data-bgmode="fit-center" style="padding: 4px 2px; font-size: 0.65rem; height: 25px; display: flex; align-items: center; justify-content: center; gap: 4px;" title="Vừa vặn">
+                <i class="fa-solid fa-compress" style="font-size: 0.6rem;"></i> Vừa vặn
+              </button>
+              <button class="bgmode-btn" data-bgmode="gradient" style="padding: 4px 2px; font-size: 0.65rem; height: 25px; display: flex; align-items: center; justify-content: center; gap: 4px;" title="Chỉ màu nền">
+                <i class="fa-solid fa-circle-half-stroke" style="font-size: 0.6rem;"></i> Chỉ nền
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="lyrics-actions">
+          <button class="btn btn-ai" id="btnAiRecognize" disabled>
+            <i class="fa-solid fa-robot"></i> Nhận diện AI
+          </button>
+          <button class="btn btn-primary" id="btnImportLyrics">
+            <i class="fa-solid fa-paste"></i> Nhập Lyrics
+          </button>
+          <button class="btn" id="btnExportSrt" title="Tải phụ đề về máy (.srt)">
+            <i class="fa-solid fa-file-arrow-down"></i> Tải SRT
+          </button>
+          <button class="btn" id="btnImportSrt" title="Nhập phụ đề từ file .srt">
+            <i class="fa-solid fa-file-signature"></i> Nhập SRT
+          </button>
+          <input type="file" id="srtFileInput" accept=".srt" style="display: none;">
+          <button class="btn" id="btnImportSync">
+            <i class="fa-solid fa-shuffle"></i> Tải mẫu
+          </button>
+          <button class="btn" id="btnClearLyrics" style="grid-column: span 2; color: var(--neon-red);" title="Xóa toàn bộ lyric">
+            <i class="fa-solid fa-trash-can"></i> Xóa hết
+          </button>
+        </div>
+
+        <!-- Lyrics list timeline -->
+        <div class="lyrics-list-container" id="lyricsList">
+          <div class="canvas-overlay-message" style="position: static; transform: none; padding: 40px 10px;">
+            Chưa có lyrics. Vui lòng tải âm thanh lên và chọn "Nhận diện AI" hoặc "Tải mẫu" để bắt đầu!
+          </div>
+        </div>
+
+        <div class="add-line-container">
+          <button class="add-line-btn" id="btnAddLyricLine">
+            <i class="fa-solid fa-circle-plus"></i> Thêm dòng lyric mới
+          </button>
+        </div>
+      </div>
+
+
+
+
+    </aside>
+
+    <!-- Center Section: Video Preview & Player controls -->
+    <main class="main-content">
+      <div class="canvas-section">
+        <div class="canvas-wrapper">
+          <!-- Background video element (inside viewport for browser to decode frames) -->
+          <video id="bgVideo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.001; pointer-events: none; object-fit: cover;" loop muted playsinline preload="auto"></video>
+          <canvas id="previewCanvas" width="1920" height="1080" style="position: relative; z-index: 1;"></canvas>
+          <div class="canvas-overlay-message" id="canvasPlaceholder" style="z-index: 2;">
+            Nhập lyrics hoặc tải nhạc để hiển thị xem trước
+          </div>
+          <!-- Loader for AI or export processing -->
+          <div class="loading-overlay" id="processingOverlay" style="z-index: 3;">
+            <div class="spinner"></div>
+            <div class="loading-text" id="processingText">Đang nhận diện âm thanh bằng Gemini AI...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Player Controls -->
+      <section class="player-section">
+        <!-- Wavesurfer Waveform -->
+        <div class="waveform-wrapper">
+          <div id="waveform"></div>
+        </div>
+
+        <div class="player-controls">
+          <div class="playback-buttons">
+            <button class="round-btn" id="btnPrevLine" title="Lùi lại dòng lyric trước">
+              <i class="fa-solid fa-backward-step"></i>
+            </button>
+            <button class="round-btn play-pause-btn" id="btnPlayPause" disabled>
+              <i class="fa-solid fa-play"></i>
+            </button>
+            <button class="round-btn" id="btnNextLine" title="Bỏ qua đến dòng tiếp theo">
+              <i class="fa-solid fa-forward-step"></i>
+            </button>
+          </div>
+
+          <div class="current-song-title" id="songTitleDisplay">Chưa có bài hát được chọn</div>
+          
+          <div class="time-display" id="timeDisplay">0:00 / 0:00</div>
+ 
+          <!-- Mobile Sync buttons (Touch friendly timing markers) -->
+          <div class="mobile-sync-buttons">
+            <button class="sync-action-btn btn-sync-start" id="btnSyncStart" title="Ghi thời gian BẮT ĐẦU cho câu hát đang chọn (Phím S)">
+              <i class="fa-solid fa-hourglass-start"></i> Ghi Start (S)
+            </button>
+            <button class="sync-action-btn btn-sync-end" id="btnSyncEnd" title="Ghi thời gian KẾT THÚC & chuyển câu tiếp theo (Phím E)">
+              <i class="fa-solid fa-hourglass-end"></i> Ghi End (E)
+            </button>
+          </div>
+
+          <div class="sync-helpers">
+            <div class="sync-badge" title="Nhấn [Space] khi đang chọn danh sách lyric để Phát/Tạm dừng">
+              <kbd>Space</kbd> Play/Pause
+            </div>
+            <div class="sync-badge" title="Nhấn phím [S] để thiết lập thời gian BẮT ĐẦU cho dòng đang chọn">
+              <kbd>S</kbd> Ghi Start
+            </div>
+            <div class="sync-badge" title="Nhấn phím [E] để thiết lập thời gian KẾT THÚC cho dòng đang chọn">
+              <kbd>E</kbd> Ghi End
+            </div>
+          </div>
+        </div>
+      </section>
+
+      </main>
+
+    <!-- Right Sidebar: Design & Export Config -->
+    <aside class="sidebar-right">
+      <div class="settings-section-title">Cấu hình giao diện</div>
+      
+      <!-- Right Content: Giao diện (Style & Typography) -->
+      <div class="right-tab-content active" id="right-tab-style" style="display: flex; flex-direction: column; flex: 1; overflow-y: auto;">
+        <div class="settings-scroll">
+          
+          <!-- TIÊU ĐỀ & GIỚI THIỆU BÀI HÁT (INTRO) -->
+          <div class="settings-group" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <span class="settings-label" style="font-weight: bold; color: var(--accent-color); font-size: 0.75rem;"><i class="fa-solid fa-rectangle-ad"></i> HIỂN THỊ TIÊU ĐỀ (INTRO)</span>
+              <input type="checkbox" id="introToggle" checked style="accent-color: var(--accent-color); width: 16px; height: 16px; cursor: pointer;">
+            </div>
+            
+            <div id="introFieldsContainer" style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-size: 0.65rem; color: var(--text-secondary);">TIÊU ĐỀ CHÍNH</span>
+                <input type="text" id="introTitleInput" class="premium-select" style="background: rgba(0,0,0,0.3); font-size: 0.75rem; padding: 6px 10px;" placeholder="Tên bài hát...">
+              </div>
+              
+              <div style="display: flex; flex-direction: column; gap: 4px;">
+                <span style="font-size: 0.65rem; color: var(--text-secondary);">PHỤ ĐỀ / NGHỆ SĨ</span>
+                <input type="text" id="introSubtitleInput" class="premium-select" style="background: rgba(0,0,0,0.3); font-size: 0.75rem; padding: 6px 10px;" placeholder="Ví dụ: Ca sĩ - Sáng tác...">
+              </div>
+              
+              <div style="display: flex; gap: 8px;">
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+                  <span style="font-size: 0.65rem; color: var(--text-secondary);">BẮT ĐẦU (S)</span>
+                  <input type="number" id="introStartInput" step="0.5" min="0" value="0.0" class="premium-select" style="background: rgba(0,0,0,0.3); font-size: 0.75rem; padding: 6px 10px; text-align: center;">
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+                  <span style="font-size: 0.65rem; color: var(--text-secondary);">KẾT THÚC (S)</span>
+                  <input type="number" id="introEndInput" step="0.5" min="0" value="6.0" class="premium-select" style="background: rgba(0,0,0,0.3); font-size: 0.75rem; padding: 6px 10px; text-align: center;">
+                 </div>
+              </div>
+
+              <!-- Cấu hình cỡ chữ Intro -->
+              <div style="display: flex; justify-content: space-between; margin-top: 8px;">
+                <span style="font-size: 0.65rem; color: var(--text-secondary);">CỠ CHỮ INTRO</span>
+                <span class="range-val text-purple" id="introFontSizeVal" style="font-size: 0.7rem;">72px</span>
+              </div>
+              <div class="range-container">
+                <input type="range" id="introFontSizeInput" min="24" max="140" step="2" value="72" class="style-slider slider-purple" style="height: 4px; margin: 4px 0;">
+              </div>
+
+              <!-- Cấu hình chiều cao Intro -->
+              <div style="display: flex; justify-content: space-between; margin-top: 8px;">
+                <span style="font-size: 0.65rem; color: var(--text-secondary);">VỊ TRÍ CHIỀU CAO (Y)</span>
+                <span class="range-val text-blue" id="introYVal" style="font-size: 0.7rem;">45%</span>
+              </div>
+              <div class="range-container">
+                <input type="range" id="introYInput" min="10" max="90" step="1" value="45" class="style-slider slider-blue" style="height: 4px; margin: 4px 0;">
+              </div>
+
+              <!-- Cấu hình vị trí chiều ngang Intro -->
+              <div style="display: flex; justify-content: space-between; margin-top: 8px;">
+                <span style="font-size: 0.65rem; color: var(--text-secondary);">VỊ TRÍ CHIỀU NGANG (X)</span>
+                <span class="range-val text-blue" id="introXVal" style="font-size: 0.7rem;">50%</span>
+              </div>
+              <div class="range-container">
+                <input type="range" id="introXInput" min="5" max="95" step="1" value="50" class="style-slider slider-blue" style="height: 4px; margin: 4px 0;">
+              </div>
+            </div>
+          </div>
+          
+          <!-- 1. Theme Color -->
+          <div class="settings-group theme-color-group">
+            <span class="settings-label"><i class="fa-solid fa-palette" style="color: var(--accent-color); margin-right: 4px;"></i> MÀU CHỦ ĐỀ</span>
+            <div class="palette-row">
+              <button class="palette-dot-btn active" data-color="neon-green" style="background-color: var(--neon-green)" title="Xanh neon"></button>
+              <button class="palette-dot-btn" data-color="neon-cyan" style="background-color: var(--neon-cyan)" title="Băng xanh"></button>
+              <button class="palette-dot-btn" data-color="neon-violet" style="background-color: var(--neon-violet)" title="Tím sáng"></button>
+              <button class="palette-dot-btn" data-color="neon-yellow" style="background-color: var(--neon-yellow)" title="Vàng kim"></button>
+              <button class="palette-dot-btn" data-color="neon-red" style="background-color: var(--neon-red)" title="Lửa đỏ"></button>
+              <button class="palette-dot-btn" data-color="neon-pink" style="background-color: var(--neon-pink)" title="Hồng đào"></button>
+              <button class="palette-dot-btn" data-color="neon-white" style="background-color: var(--neon-white)" title="Trắng sáng"></button>
+            </div>
+          </div>
+
+          <!-- 2. Lyric Effect -->
+          <div class="settings-group">
+            <span class="settings-label">HIỆU ỨNG LYRIC</span>
+            <div class="effects-grid">
+              <button class="effect-btn active" data-effect="karaoke">Karaoke</button>
+              <button class="effect-btn" data-effect="word">Chữ chạy</button>
+              <button class="effect-btn" data-effect="fade">Mờ dần</button>
+              <button class="effect-btn" data-effect="typewriter">Máy chữ</button>
+              <button class="effect-btn" data-effect="shake">Rung lắc</button>
+              <button class="effect-btn" data-effect="gradient">Đổi màu</button>
+              <button class="effect-btn" data-effect="subtitle">Tĩnh (Sub)</button>
+            </div>
+          </div>
+
+          <!-- 3. Lyric Mode -->
+          <div class="settings-group">
+            <span class="settings-label">KIỂU HIỂN THỊ CHỮ</span>
+            <div class="sub-toggle-grid" style="grid-template-columns: repeat(2, 1fr);">
+              <button class="lyric-mode-btn active" data-lyric-mode="single">
+                <i class="fa-solid fa-message"></i> Một câu
+              </button>
+              <button class="lyric-mode-btn" data-lyric-mode="scrolling">
+                <i class="fa-solid fa-heading"></i> Cuộn toàn bộ
+              </button>
+            </div>
+          </div>
+
+          <!-- 3.5 Text Case Toggle -->
+          <div class="settings-group">
+            <span class="settings-label">ĐỊNH DẠNG CHỮ</span>
+            <div class="sub-toggle-grid" style="grid-template-columns: repeat(2, 1fr);">
+              <button class="text-case-btn active" data-case="normal">
+                <i class="fa-solid fa-font"></i> Thường
+              </button>
+              <button class="text-case-btn" data-case="uppercase">
+                <i class="fa-solid fa-text-height"></i> IN HOA HẾT
+              </button>
+            </div>
+          </div>
+
+          <!-- 4. Background Motion Effects -->
+          <div class="settings-group">
+            <span class="settings-label">HIỆU ỨNG DỰNG VIDEO</span>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px;">
+              <label class="premium-checkbox-label" style="display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer;">
+                <span><i class="fa-solid fa-arrows-alt" style="margin-right: 6px; color: var(--neon-yellow);"></i>Zoom ảnh nền chậm (Ken Burns)</span>
+                <input type="checkbox" id="kenBurnsToggle" checked style="accent-color: var(--accent-color); width: 15px; height: 15px;">
+              </label>
+              <label class="premium-checkbox-label" style="display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer;">
+                <span><i class="fa-solid fa-star" style="margin-right: 6px; color: var(--neon-cyan);"></i>Hiệu ứng hạt bay lấp lánh</span>
+                <input type="checkbox" id="particlesToggle" checked style="accent-color: var(--accent-color); width: 15px; height: 15px;">
+              </label>
+              <label class="premium-checkbox-label" style="display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer;">
+                <span><i class="fa-solid fa-wave-square" style="margin-right: 6px; color: var(--neon-green);"></i>Hiệu ứng sóng nhạc Neon</span>
+                <input type="checkbox" id="spectrumToggle" checked style="accent-color: var(--accent-color); width: 15px; height: 15px;">
+              </label>
+              <!-- Chọn kiểu sóng nhạc Neon -->
+              <div id="spectrumStyleContainer" style="display: flex; margin-left: 20px; margin-top: -4px; margin-bottom: 4px; align-items: center; gap: 8px;">
+                <span style="font-size: 0.65rem; color: var(--text-secondary);">KIỂU SÓNG:</span>
+                <select id="spectrumStyleSelect" class="premium-select" style="background: rgba(0,0,0,0.4); font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; height: 24px; width: 130px; border: 1px solid var(--border-glow); color: var(--text-primary);">
+                  <option value="bars">Thanh Neon</option>
+                  <option value="mirrored-bars">Thanh đối xứng</option>
+                  <option value="wave">Sóng line mịn</option>
+                  <option value="double-wave">Sóng kép Neon</option>
+                  <option value="circle">Vòng tròn sóng</option>
+                  <option value="radial-bars" selected>Vòng tròn phổ nhạc</option>
+                </select>
+              </div>
+              <label class="premium-checkbox-label" style="display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer;">
+                <span><i class="fa-solid fa-compact-disc" style="margin-right: 6px; color: var(--neon-violet);"></i>Đĩa nhạc quay Lofi (nếu có Cover)</span>
+                <input type="checkbox" id="vinylToggle" checked style="accent-color: var(--accent-color); width: 15px; height: 15px;">
+              </label>
+              <label class="premium-checkbox-label" style="display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer;">
+                <span><i class="fa-solid fa-circle" style="margin-right: 6px; color: var(--neon-pink);"></i>Đốm sáng Bokeh Lofi lãng mạn</span>
+                <input type="checkbox" id="bokehToggle" checked style="accent-color: var(--accent-color); width: 15px; height: 15px;">
+              </label>
+              <label class="premium-checkbox-label" style="display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer;">
+                <span><i class="fa-solid fa-camera-retro" style="margin-right: 6px; color: var(--neon-yellow);"></i>Bụi phim & Trầy xước cổ điển</span>
+                <input type="checkbox" id="grainToggle" checked style="accent-color: var(--accent-color); width: 15px; height: 15px;">
+              </label>
+            </div>
+          </div>
+
+          <!-- 5. Font Family -->
+          <div class="settings-group">
+            <span class="settings-label">FONT CHỮ</span>
+            <select id="fontSelect" class="premium-select">
+              <option value="Inter">Inter (Sans-serif)</option>
+              <option value="Montserrat">Montserrat (Geometric)</option>
+              <option value="Bebas Neue">Bebas Neue (Condensed)</option>
+              <option value="Oswald">Oswald (Modern)</option>
+              <option value="Playfair Display">Playfair (Serif)</option>
+              <option value="Dancing Script">Dancing (Cursive)</option>
+            </select>
+          </div>
+
+          <!-- 6. Font Size -->
+          <div class="settings-group">
+            <div style="display: flex; justify-content: space-between;">
+              <span class="settings-label">CỠ CHỮ LYRIC (TRÊN VIDEO)</span>
+              <span class="range-val text-purple" id="fontSizeVal">64px</span>
+            </div>
+            <div class="range-container">
+              <input type="range" id="fontSizeInput" min="24" max="120" step="2" value="64" class="style-slider slider-purple">
+            </div>
+          </div>
+
+          <!-- 7. Lyric Position -->
+          <div class="settings-group">
+            <div style="display: flex; justify-content: space-between;">
+              <span class="settings-label">VỊ TRÍ LYRIC (CHIỀU CAO)</span>
+              <span class="range-val text-blue" id="lyricYVal">80%</span>
+            </div>
+            <div class="range-container">
+              <input type="range" id="lyricYInput" min="10" max="90" step="1" value="80" class="style-slider slider-blue">
+            </div>
+          </div>
+
+          <!-- 7.5 Background Darkness (Overlay Opacity) -->
+          <div class="settings-group">
+            <div style="display: flex; justify-content: space-between;">
+              <span class="settings-label">ĐỘ TỐI NỀN</span>
+              <span class="range-val text-blue" id="bgOpacityVal">15%</span>
+            </div>
+            <div class="range-container">
+              <input type="range" id="bgOpacityInput" min="0" max="50" step="5" value="15" class="style-slider slider-blue">
+            </div>
+          </div>
+
+          <!-- 8. Delay -->
+          <div class="settings-group">
+            <div style="display: flex; justify-content: space-between;">
+              <span class="settings-label">HIỆN TRƯỚC (DELAY TRƯỚC DÒNG)</span>
+              <span class="range-val text-yellow" id="preshowDelayVal">1.0s</span>
+            </div>
+            <div class="range-container">
+              <input type="range" id="preshowDelayInput" min="0.0" max="3.0" step="0.1" value="1.0" class="style-slider slider-yellow">
+            </div>
+          </div>
+
+          <!-- 9. Show Next Line Toggle -->
+          <div class="settings-group" id="next-line-toggle-group">
+            <span class="settings-label">HIỆN CÂU TIẾP THEO</span>
+            <div class="sub-toggle-grid">
+              <button class="sub-toggle-btn active" data-show-subtitle="true">
+                <i class="fa-solid fa-eye"></i> Hiện câu tiếp
+              </button>
+              <button class="sub-toggle-btn" data-show-subtitle="false">
+                <i class="fa-solid fa-eye-slash"></i> Ẩn câu tiếp
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+    </aside>
+
+  </div>
+
+  <!-- Modal: API Key Configuration -->
+  <div class="modal-backdrop" id="apiKeyModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h4 class="modal-title">Cấu hình Gemini API Key</h4>
+        <button class="modal-close" id="btnCloseApiKeyModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Ứng dụng này sử dụng **Google Gemini AI** trực tiếp từ trình duyệt của bạn để nhận diện âm thanh và khớp lyric chính xác.</p>
+        <p>Để lấy API Key miễn phí hoặc có phí, truy cập Google AI Studio: <br>
+          <a href="https://aistudio.google.com/" target="_blank" style="color: var(--neon-cyan); text-decoration: underline;">https://aistudio.google.com/</a>
+        </p>
+        <p><strong>Lưu ý:</strong> API Key của bạn được lưu hoàn toàn ở **localStorage** trên máy tính của bạn và chỉ được gửi trực tiếp đến API Google Generative AI.</p>
+        
+        <input type="password" class="modal-input" id="apiKeyInput" placeholder="Nhập API Key tại đây (AIzaSy...)">
+        
+        <div style="margin-top: 10px;">
+          <label class="settings-label" style="display: block; margin-bottom: 5px; font-size: 0.75rem;">MÔ HÌNH GEMINI AI:</label>
+          <select class="modal-input" id="apiModelSelect" style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-glow); color: var(--text-primary); padding: 8px; border-radius: 6px; width: 100%;">
+            <option value="gemini-2.5-flash">gemini-2.5-flash (Khuyên dùng - Nhanh, ổn định, hỗ trợ Audio tốt)</option>
+            <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite (Tiết kiệm - Phù hợp tài khoản Free tier)</option>
+            <option value="gemini-2.5-pro">gemini-2.5-pro (Chất lượng cao - Nhận diện chính xác hơn)</option>
+            <option value="gemini-3-flash">gemini-3-flash (Mới nhất - Cân bằng tốc độ và chất lượng)</option>
+            <option value="gemini-3.5-flash">gemini-3.5-flash (Cao cấp nhất - Dành cho API Key trả phí)</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" id="btnTestApiKey" style="background: transparent;">Kiểm tra Key</button>
+        <button class="btn btn-primary" id="btnSaveApiKey">Lưu cấu hình</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Import Lyrics Text -->
+  <div class="modal-backdrop" id="importLyricsModal">
+    <div class="modal" style="width: 560px;">
+      <div class="modal-header">
+        <h4 class="modal-title">Nhập Lời Bài Hát</h4>
+        <button class="modal-close" id="btnCloseImportModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Dán toàn bộ lời bài hát vào ô bên dưới. <strong>Mỗi dòng = 1 câu lyric</strong>. Dòng trống sẽ được bỏ qua.</p>
+        <textarea class="prompt-textarea" id="importLyricsTextarea" style="min-height: 300px; font-size: 0.9rem;" placeholder="Ví dụ:
+Nắng xiên qua từng khung cửa nhỏ
+Đánh thức giấc mơ đêm qua dịu êm
+Gió khẽ lay nhành hoa quỳnh nở
+..."></textarea>
+        <div style="display: flex; align-items: center; gap: 10px; margin-top: 8px;">
+          <input type="checkbox" id="autoDistributeTimestamps" checked style="accent-color: var(--accent-color); width: 16px; height: 16px;">
+          <label for="autoDistributeTimestamps" style="font-size: 0.8rem; color: var(--text-secondary);">Tự động phân bố đều timestamps theo thời lượng audio (nếu đã tải nhạc)</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" id="btnCancelImport" style="background: transparent;">Hủy</button>
+        <button class="btn btn-primary" id="btnConfirmImport"><i class="fa-solid fa-check"></i> Nhập vào danh sách</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <span id="toastIcon"></span>
+    <span id="toastMessage">Thông báo ứng dụng</span>
+  </div>
+
+
+  <!-- Wavesurfer.js library CDN -->
+  <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
+  <!-- Core application logic script -->
+  <script src="app.js"></script>
+</body>
+</html>

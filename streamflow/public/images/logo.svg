@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111827" />
+      <stop offset="100%" stop-color="#030712" />
+    </linearGradient>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="50%" stop-color="#0055ff" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Background Shape (Sleek Rounded Hexagon) -->
+  <rect x="5" y="5" width="90" height="90" rx="28" fill="url(#bgGrad)" stroke="#1f2937" stroke-width="1.5" />
+  
+  <!-- Flow Lines / Play Emblem -->
+  <g filter="url(#neonGlow)">
+    <!-- Gradient Flowing Waves forming S/Play Shape -->
+    <path d="M30 35 C 30 25, 45 22, 55 30 L 70 42 C 76 47, 76 53, 70 58 L 55 70 C 45 78, 30 75, 30 65" stroke="url(#logoGrad)" stroke-width="7" stroke-linecap="round" fill="none" />
+    <path d="M42 42 C 42 37, 50 35, 55 40 L 62 46 C 65 48, 65 52, 62 54 L 55 60 C 50 65, 42 63, 42 58 Z" fill="url(#logoGrad)" />
+  </g>
+</svg>
