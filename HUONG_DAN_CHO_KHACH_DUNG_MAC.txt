@@ -1,0 +1,27 @@
+🍎 HƯỚNG DẪN CÀI ĐẶT FLOWAGENT AI TRÊN MÁY MAC (MACBOOK / MAC MINI / IMAC)
+===========================================================================
+
+1. CÀI ĐẶT ỨNG DỤNG:
+- Nhấp đúp vào file "FlowAgent AI.dmg" tải về.
+- Kéo icon "FlowAgent AI" thả vào thư mục "Applications" (Ứng dụng).
+
+2. MỞ KHÓA BẢO MẬT MAC (LÀM 1 LẦN DUY NHẤT):
+- Do app chưa mua chứng chỉ $99/năm của Apple nên macOS sẽ báo "App is damaged / không thể mở".
+- Cách khắc phục: Mở ứng dụng "Terminal" trên Mac (Command + Space -> gõ Terminal), dán dòng lệnh sau rồi bấm Enter:
+
+xattr -cr /Applications/"FlowAgent AI.app"
+
+- Sau đó mở ứng dụng FlowAgent AI lên bình thường.
+
+3. CÀI MÔI TRƯỜNG PYTHON (CHO FLOW STUDIO SINH ẢNH/VIDEO):
+- Mở Terminal, gõ lệnh sau để cài thư viện hỗ trợ:
+pip3 install fastapi "uvicorn[standard]" python-multipart aiofiles aiohttp httpx Pillow pywebview imageio-ffmpeg
+
+(Nếu máy chưa có Python 3: chỉ cần gõ lệnh "brew install python3" hoặc tải bộ cài .pkg từ python.org)
+
+4. CÀI EXTENSION TRÊN CHROME:
+- Mở Chrome trên Mac -> vào địa chỉ: chrome://extensions/
+- Bật "Developer mode" ở góc phải.
+- Bấm "Load unpacked" -> chọn thư mục "flowkit_extension".
+
+Chúc bạn sử dụng FlowAgent AI hiệu quả!

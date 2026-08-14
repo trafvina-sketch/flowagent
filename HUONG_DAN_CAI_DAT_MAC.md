@@ -1,94 +1,89 @@
-# 🍎 Hướng dẫn Đóng gói & Chạy FlowAgent AI trên macOS
+# 🍎 HƯỚNG DẪN CÀI ĐẶT & SỬ DỤNG FLOWAGENT AI TRÊN MACOS (M1/M2/M3/M4 & INTEL)
 
-## 1. 💡 Khái niệm: File "EXE" trên Mac là gì?
-Trên hệ điều hành **macOS (MacBook, Mac Mini, iMac, Mac Studio)**:
-- Không sử dụng định dạng `.exe` (vì `.exe` là định dạng độc quyền của Microsoft Windows).
-- macOS sử dụng định dạng gói cài đặt **`.dmg`** (Apple Disk Image) hoặc ứng dụng **`.app`** (macOS Application Bundle) hoặc file nén **`.zip`** chứa `.app`.
-- Khi người dùng Mac cài ứng dụng, họ chỉ cần mở file `.dmg` và kéo biểu tượng ứng dụng vào thư mục **Applications**.
+Tài liệu này hướng dẫn chi tiết từng bước cho người dùng máy Mac (MacBook, Mac Mini, iMac, Mac Studio) cài đặt và sử dụng phần mềm **FlowAgent AI**.
 
 ---
 
-## 2. 🛠️ Cách Đóng gói (Build) Bản Cài Đặt cho Mac
-
-### Cách 1: Sử dụng GitHub Actions (Khuyên dùng nhất — Miễn phí & Chuẩn 100%)
-Do đóng gói cho macOS chuẩn nhất cần môi trường hệ điều hành macOS (đặc biệt là tạo file `.dmg`), dự án đã tích hợp sẵn GitHub Actions trong file [`.github/workflows/build-mac.yml`](file:///.github/workflows/build-mac.yml).
-
-1. Đẩy mã nguồn dự án lên GitHub repository của bạn.
-2. Mở GitHub trên trình duyệt -> Vào tab **Actions**.
-3. Chọn workflow **"Build FlowAgent AI for macOS"** -> Bấm nút **Run workflow**.
-4. GitHub sẽ tự động khởi tạo máy Mac trên đám mây, biên dịch và đóng gói hoàn chỉnh cả 2 phiên bản:
-   - **Apple Silicon (`arm64`)**: Dành cho chip M1, M2, M3, M4...
-   - **Intel (`x64`)**: Dành cho các dòng Mac chip Intel đời cũ.
-5. Sau khi build xong (khoảng 3-5 phút), bạn vào mục **Artifacts** tải file `.dmg` / `.zip` về để phân phối cho khách hàng.
+## 📌 MỤC LỤC
+1. [Bước 1: Cài đặt ứng dụng FlowAgent AI (.dmg)](#bước-1-cài-đặt-ứng-dụng-flowagent-ai-dmg)
+2. [Bước 2: Xử lý cảnh báo bảo mật macOS (Gatekeeper)](#bước-2-xử-lý-cảnh-báo-bảo-mật-macos-gatekeeper---quan-trọng)
+3. [Bước 3: Cài đặt môi trường Python Backend](#bước-3-cài-đặt-môi-trường-python-backend-cho-flow-studio)
+4. [Bước 4: Cài đặt FlowKit Extension trên Google Chrome](#bước-4-cài-đặt-flowkit-extension-trên-trình-duyệt-chrome)
+5. [Khắc phục các lỗi thường gặp](#khắc-phục-các-lỗi-thường-gặp)
 
 ---
 
-### Cách 2: Đóng gói trực tiếp trên máy Mac
-Nếu bạn hoặc đồng nghiệp có máy Mac:
-1. Mở Terminal tại thư mục dự án `flowagent`.
-2. Cấp quyền thực thi cho script:
+## 🚀 Bước 1: Cài đặt ứng dụng FlowAgent AI (.dmg)
+
+1. Tải về file cài đặt có đuôi **`.dmg`** (ví dụ: `FlowAgent AI-1.0.0-arm64.dmg` cho chip M1-M4 hoặc `FlowAgent AI-1.0.0.dmg` cho chip Intel).
+2. **Nhấp đúp chuột** vào file `.dmg` để mở.
+3. Trong cửa sổ vừa hiện ra, dùng chuột **kéo icon FlowAgent AI** thả vào thư mục **Applications (Ứng dụng)**.
+4. Đợi quá trình sao chép hoàn tất (mất khoảng 10-20 giây).
+
+---
+
+## ⚠️ Bước 2: Xử lý cảnh báo bảo mật macOS (Gatekeeper - QUAN TRỌNG)
+
+> **Lý do:** Do ứng dụng là phần mềm nội bộ/chuyên dụng chưa đăng ký chứng chỉ thương mại hàng năm của Apple ($99/năm), cơ chế Gatekeeper của macOS sẽ hiện cảnh báo khi bạn mở lần đầu:
+> * *"FlowAgent AI is damaged and can't be opened. You should move it to the Trash"* 
+> * Hoặc *"Không thể mở vì nhà phát triển không được xác minh"*.
+
+### 👉 Cách mở khóa trong 3 giây (Làm 1 lần duy nhất):
+
+1. Mở ứng dụng **Terminal** trên Mac (Bấm tổ hợp phím `Command + Space`, gõ `Terminal` rồi nhấn `Enter`).
+2. Dán dòng lệnh sau vào cửa sổ Terminal và nhấn `Enter`:
    ```bash
-   chmod +x build_mac.sh
-   ./build_mac.sh
+   xattr -cr /Applications/"FlowAgent AI.app"
    ```
-3. Hoặc chạy lệnh npm:
-   ```bash
-   # Build cho Apple Silicon (M1/M2/M3/M4)
-   npm run dist:mac:arm64
-
-   # Build cho Intel Mac
-   npm run dist:mac:x64
-
-   # Build Universal (chạy mọi loại Mac)
-   npm run dist:mac:universal
-   ```
-4. File `.dmg` và `.zip` hoàn chỉnh sẽ nằm trong thư mục `release/`.
+3. *(Nếu hệ thống yêu cầu quyền quản trị, chạy thêm lệnh: `sudo xattr -rd com.apple.quarantine /Applications/"FlowAgent AI.app"` và nhập mật khẩu mở máy Mac)*.
+4. **Xong!** Bây giờ bạn có thể mở ứng dụng `FlowAgent AI` trực tiếp từ Launchpad hoặc thư mục Applications một cách mượt mà.
 
 ---
 
-### Cách 3: Đóng gói thử nghiệm từ Windows
-Bạn có thể chạy file [`BUILD_MAC_FROM_WINDOWS.bat`](file:///BUILD_MAC_FROM_WINDOWS.bat) hoặc gõ lệnh:
+## 🐍 Bước 3: Cài đặt môi trường Python Backend (cho Flow Studio)
+
+FlowAgent AI tích hợp hệ thống xử lý video/âm thanh và sinh ảnh tự động thông qua Python Backend. Bạn chỉ cần cài đặt môi trường 1 lần:
+
+### Cách A: Cài đặt tự động bằng Script (Khuyên dùng)
+1. Mở ứng dụng **Terminal**.
+2. Kéo file **`setup_python.sh`** thả vào cửa sổ Terminal rồi nhấn **`Enter`**.
+3. Script sẽ tự động:
+   * Kiểm tra Python 3 trên máy Mac.
+   * Cài đặt các thư viện lõi: `fastapi`, `uvicorn`, `imageio-ffmpeg`, `aiofiles`, `httpx`, `Pillow`...
+
+### Cách B: Cài đặt thủ công qua Homebrew / Terminal
+Nếu bạn quen dùng dòng lệnh Terminal:
 ```bash
-npm run dist:mac
+# 1. Cài đặt Python 3 (nếu máy chưa có)
+brew install python3
+
+# 2. Cài đặt các thư viện cần thiết cho FlowAgent
+pip3 install fastapi "uvicorn[standard]" python-multipart aiofiles aiohttp httpx Pillow pywebview imageio-ffmpeg
 ```
 
 ---
 
-## 3. 🚀 Hướng Dẫn Cài Đặt & Khởi Chạy trên Máy Mac (Cho Người Dùng)
+## 🔌 Bước 4: Cài đặt FlowKit Extension trên Trình duyệt Chrome
 
-### Bước 1: Cài đặt Python trên Mac
-FlowAgent AI có backend Python FastAPI tự động. Người dùng Mac chỉ cần:
-1. Mở Terminal trên Mac.
-2. Chạy file script cài đặt tự động:
-   ```bash
-   chmod +x setup_python.sh
-   ./setup_python.sh
-   ```
-   *(Script sẽ tự động kiểm tra Python 3 và cài đặt đầy đủ các thư viện `fastapi`, `uvicorn`, `imageio-ffmpeg`, `aiofiles`, v.v.)*
+Để FlowAgent AI đồng bộ và điều khiển tác vụ tự động trên tài khoản Flow / Google:
 
-### Bước 2: Cài đặt ứng dụng FlowAgent AI
-1. Mở file `FlowAgent AI.dmg`.
-2. Kéo icon `FlowAgent AI` thả vào thư mục `Applications`.
-3. Mở ứng dụng từ Launchpad hoặc thư mục Applications.
+1. Mở trình duyệt **Google Chrome** trên máy Mac.
+2. Truy cập vào địa chỉ: `chrome://extensions/`
+3. Bật công tắc **Developer mode (Chế độ dành cho nhà phát triển)** ở góc trên bên phải.
+4. Nhấp nút **Load unpacked (Tải tiện ích đã giải nén)** ở góc trái.
+5. Chọn thư mục **`flowkit_extension`** đi kèm với bộ cài đặt.
+6. Extension sẽ kết nối với FlowAgent AI thông qua cổng nội bộ `ws://localhost:8100/ws/flowkit`.
 
 ---
 
-## 4. ⚠️ Xử Lý Cảnh Báo Bảo Mật macOS (Gatekeeper)
-Vì ứng dụng chưa đăng ký chứng chỉ trả phí hàng năm từ Apple ($99/năm của Apple Developer ID), macOS sẽ hiển thị cảnh báo bảo mật:
-> *"FlowAgent AI is damaged and can't be opened"* hoặc *"Không thể mở vì nhà phát triển không được xác minh"*.
+## 🛠️ Khắc phục các lỗi thường gặp
 
-**Cách xử lý 1 lần duy nhất trong 3 giây:**
-1. Mở ứng dụng **Terminal** trên máy Mac.
-2. Dán lệnh sau và nhấn **Enter**:
-   ```bash
-   xattr -cr /Applications/"FlowAgent AI.app"
-   ```
-3. Sau đó mở lại ứng dụng bình thường!
+| Hiện tượng | Nguyên nhân | Cách xử lý |
+| :--- | :--- | :--- |
+| **"App is damaged..."** | Cơ chế Gatekeeper cách ly file tải từ Internet | Mở Terminal chạy: `xattr -cr /Applications/"FlowAgent AI.app"` |
+| **Báo thiếu Python khi mở app** | Chưa cài Python 3 hoặc chưa có trong PATH | Cài đặt Python 3 qua [python.org/downloads/macos](https://www.python.org/downloads/macos/) hoặc lệnh `brew install python3` |
+| **Lỗi ghép nối video (FFmpeg)** | Chưa cài gói `imageio-ffmpeg` | Mở Terminal chạy: `pip3 install imageio-ffmpeg` |
+| **Không kết nối được Extension** | Cổng 8100 bị chặn hoặc chưa bật backend | Tắt app và mở lại, ứng dụng sẽ tự động kích hoạt backend và giải phóng cổng |
 
 ---
-
-## 5. 🔌 Cài Đặt FlowKit Extension trên Trình Duyệt Chrome của Mac
-1. Mở Chrome trên Mac -> Truy cập `chrome://extensions/`.
-2. Bật công tắc **Developer mode** ở góc phải trên.
-3. Nhấp **Load unpacked** (Tải tiện ích đã giải nén).
-4. Chọn thư mục `flowkit_extension` để kết nối WebSocket với FlowAgent AI.
+Chúc bạn có những trải nghiệm sáng tạo nội dung AI tuyệt vời cùng **FlowAgent AI** trên macOS!
