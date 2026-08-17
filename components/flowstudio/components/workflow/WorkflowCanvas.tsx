@@ -48,7 +48,7 @@ const WorkflowCanvas: React.FC = () => {
 
     try {
       const promptNodes = nodes.filter(n => n.type === 'prompt');
-      const videoNodes = nodes.filter(n => n.type === 'video' || n.type === 'videoPrompt' || n.type === 'batch');
+      const videoNodes = nodes.filter(n => n.type === 'videoPrompt' || n.type === 'batch');
  
       if (promptNodes.length === 0 && videoNodes.length === 0) {
         toast.error('Không tìm thấy Node kịch bản nào trên Canvas để chạy!');

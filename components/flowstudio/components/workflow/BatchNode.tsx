@@ -866,8 +866,8 @@ export default function BatchNode({ id, data, selected }: { id: string; data: an
                 });
               }
 
-              // Increase timeout to 300000ms (5 minutes)
-              const status = await waitForJob(jobId, cur, 300000);
+              // Increase timeout to 480000ms (8 minutes) — Veo 3.1 can take 4-8 min
+              const status = await waitForJob(jobId, cur, 480000);
               lastCompletionTimeRef.current = Date.now();
 
               if (status === 'DONE') {

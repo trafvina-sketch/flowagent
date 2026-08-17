@@ -322,7 +322,7 @@ export const MultiWorkflowPanel: React.FC<MultiWorkflowPanelProps> = ({ onClose,
     while (Date.now() - start < maxWaitSeconds * 1000) {
       if (abortRef.current) throw new Error('Đã hủy tiến trình!');
       await new Promise((r) => setTimeout(r, 4000));
-      const res = await axios.get(`${API.flowkitStatus}/job/${jobId}`);
+      const res = await axios.get(`/api/generate/jobs/${jobId}`);
       const job = res.data;
       if (job.status === 'COMPLETED' || job.status === 'done' || job.status === 'SUCCESS') {
         return job;

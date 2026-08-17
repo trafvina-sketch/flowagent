@@ -160,6 +160,8 @@ async def generate_video(req: GenerateVideoRequest):
     start_media_id = req.start_image_media_id or None
 
     # Generate video (T2V if no start_media_id, I2V otherwise)
+    # max_retries=1: Video generation is async on Google's server.
+    # Retrying sends a NEW video job while the original is still rendering → duplicates.
     if not start_media_id:
         print(f"[Generate] T2V: Direct Text-to-Video generation...")
         result = await _call_with_retry(
@@ -170,6 +172,7 @@ async def generate_video(req: GenerateVideoRequest):
             reference_media_ids=req.reference_media_ids or None,
             video_model=req.video_model,
             aspect_ratio=req.aspect_ratio,
+            max_retries=1,
         )
     else:
         print(f"[Generate] I2V: Generating video with start_media_id: {start_media_id}")
@@ -181,6 +184,7 @@ async def generate_video(req: GenerateVideoRequest):
             reference_media_ids=req.reference_media_ids or None,
             video_model=req.video_model,
             aspect_ratio=req.aspect_ratio,
+            max_retries=1,
         )
 
     return result

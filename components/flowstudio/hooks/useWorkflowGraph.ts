@@ -1547,25 +1547,31 @@ export function useWorkflowGraph() {
   useEffect(() => { onGenVideoRef.current = onGenVideo; }, [onGenVideo]);
 
   // ═══════════════════════════════════════════════════════════════
-  // Auto-timeout: Video generating > 4 phút → xoá node → tự retry
+  // Auto-timeout: Video generating > 8 phút → tự retry (tối đa 1 lần)
+  // Veo 3.1 thường mất 4-8 phút, nên chỉ retry khi thực sự stuck
   // ═══════════════════════════════════════════════════════════════
-  const VIDEO_TIMEOUT_MS = 4 * 60 * 1000; // 4 phút
-  const MAX_AUTO_RETRIES = 3;
+  const VIDEO_TIMEOUT_MS = 8 * 60 * 1000; // 8 phút (tránh retry sớm khi Veo 3.1 đang render)
+  const MAX_AUTO_RETRIES = 1; // Chỉ retry 1 lần duy nhất để tránh tạo lặp video
 
   useEffect(() => {
     const interval = setInterval(async () => {
       const now = Date.now();
       const allNodes = nodesRef.current;
 
-      // Find stuck video nodes (generating > 4 min, no videoUrl, has startedAt)
+      // Find stuck video nodes (generating > 8 min, no videoUrl, has startedAt)
       const stuckNodes = allNodes.filter(n => {
         if (n.type !== 'video') return false;
         if (!n.data.isGeneratingVideo) return false;
-        if (n.data.videoUrl) return false;
+        if (n.data.videoUrl) return false; // Đã có video → skip
         const startedAt = n.data.startedAt as number;
         if (!startedAt) return false;
         const retries = (n.data.autoRetryCount as number) || 0;
-        if (retries >= MAX_AUTO_RETRIES) return false;
+        if (retries >= MAX_AUTO_RETRIES) return false; // Đã retry đủ → skip
+        if (n.data.jobId) {
+          // Nếu đã có jobId → kiểm tra backend trước khi retry
+          // Backend poller có thể đang xử lý → không retry sớm
+          return false;
+        }
         return (now - startedAt) > VIDEO_TIMEOUT_MS;
       });
 
