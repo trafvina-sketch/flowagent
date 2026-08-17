@@ -727,6 +727,21 @@ export function useWorkflowGraph() {
     const node = nodesRef.current.find((n) => n.id === nodeId);
     if (!node) return;
 
+    // ═══ GUARD: Prevent duplicate video generation ═══
+    // Skip if this node is already generating a video
+    if (node.data.isGeneratingVideo) {
+      console.log(`[onGenVideo] Node ${nodeId} is already generating video. Skipping.`);
+      return;
+    }
+    // Skip if this image node already has a video child node
+    const existingVideoChild = nodesRef.current.find(n =>
+      n.type === 'video' && n.data.sourceImageNodeId === nodeId && (n.data.videoUrl || n.data.isGeneratingVideo)
+    );
+    if (existingVideoChild) {
+      console.log(`[onGenVideo] Node ${nodeId} already has a video child (${existingVideoChild.id}). Skipping.`);
+      return;
+    }
+
     // Block video generation for reference nodes (Characters, Backgrounds, Props)
     const label = (node.data.label as string) || '';
     if (label.startsWith('👤') || label.startsWith('🏞️') || label.startsWith('🎭')) {
@@ -811,6 +826,12 @@ export function useWorkflowGraph() {
   const onGenVideoFromVideoPrompt = useCallback(async (videoPromptNodeId: string) => {
     const vpNode = nodesRef.current.find(n => n.id === videoPromptNodeId);
     if (!vpNode) return;
+
+    // ═══ GUARD: Prevent re-entry / duplicate generation ═══
+    if (vpNode.data.isGeneratingVideo) {
+      console.log(`[onGenVideoFromVideoPrompt] Node ${videoPromptNodeId} is already generating. Skipping.`);
+      return;
+    }
 
     const videoPromptText = (vpNode.data.videoPrompt as string) || '';
     const videoLines = videoPromptText.split('\n').filter(l => l.trim());
@@ -5790,7 +5811,7 @@ const parseModelOverride = (promptText: string, defaultModel: string, fallbackMo
 
       const origImageOnly = t2iNode.data.imageOnly;
       setNodes(nds => nds.map(n => n.id === t2iNode.id ? { ...n, data: { ...n.data, imageOnly: true } } : n));
-      await onBatchGenImage(t2iNode.id, prompts, ratio, (t2iNode.data.concurrent as number) || 2);
+      await onBatchGenImage(t2iNode.id, prompts, ratio, (t2iNode.data.concurrent as number) || 2, true); // skipAutoVideoTrigger=true: pipeline sẽ tự gọi video ở Step 2
       setNodes(nds => nds.map(n => n.id === t2iNode.id ? { ...n, data: { ...n.data, imageOnly: origImageOnly } } : n));
     }
 
